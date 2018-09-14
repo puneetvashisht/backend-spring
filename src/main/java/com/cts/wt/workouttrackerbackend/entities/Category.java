@@ -1,5 +1,6 @@
 package com.cts.wt.workouttrackerbackend.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,18 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
+	@Column(unique=true)
 	String name;
+//	
+//	@OneToMany(cascade=CascadeType.ALL, mappedBy="category")
+//	List<Workout> workouts;
+	
+//	public List<Workout> getWorkouts() {
+//		return workouts;
+//	}
+//	public void setWorkouts(List<Workout> workouts) {
+//		this.workouts = workouts;
+//	}
 	public int getId() {
 		return id;
 	}
@@ -24,6 +36,12 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 	
 	
 	

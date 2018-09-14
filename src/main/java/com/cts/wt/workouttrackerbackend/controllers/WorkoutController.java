@@ -10,26 +10,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.wt.workouttrackerbackend.entities.Category;
+import com.cts.wt.workouttrackerbackend.entities.Workout;
 import com.cts.wt.workouttrackerbackend.repos.CategoriesRepo;
+import com.cts.wt.workouttrackerbackend.repos.WorkoutRepo;
 
 @RestController
-public class CategoriesController {
+public class WorkoutController {
 	
 	@Autowired
-	CategoriesRepo categoriesRepo;
+	WorkoutRepo workoutRepo;
 	
-	@PostMapping("/category")
-	public ResponseEntity<Void> addCategory(@RequestBody Category category){
-		categoriesRepo.save(category);
+	@Autowired
+	CategoriesRepo categoryRepo;
+	
+	@PostMapping("/workout")
+	public ResponseEntity<Void> addCategory(@RequestBody Workout workout){
+		
+		System.out.println(workout.getCategory());
+		if(workout.getCategory().getId()!=0){
+			Category category = categoryRepo.findById(workout.getCategory().getId());
+			workout.setCategory(category);
+		}
+		workoutRepo.save(workout);
 		ResponseEntity<Void> rs = new ResponseEntity<>(HttpStatus.CREATED);
 		return rs;
 		
 	}
 	
-	@GetMapping("/category")
-	public Category fetchCategory(@PathVariable("id") int id){
-		Category category = categoriesRepo.findById(id);
-		return category;
+	@GetMapping("/workout/{id}")
+	public Workout fetchCategory(@PathVariable("id") int id){
+		Workout workout = workoutRepo.findById(id);
+		return workout;
 		
 	}
 
