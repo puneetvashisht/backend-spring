@@ -3,6 +3,7 @@ package com.cts.wt.workouttrackerbackend.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import com.cts.wt.workouttrackerbackend.entities.Category;
 import com.cts.wt.workouttrackerbackend.repos.CategoriesRepo;
 
 @RestController
+@CrossOrigin("*")
 public class CategoriesController {
 	
 	@Autowired
@@ -26,10 +28,12 @@ public class CategoriesController {
 		
 	}
 	
-	@GetMapping("/category")
+	@GetMapping("/category/{id}")
 	public Category fetchCategory(@PathVariable("id") int id){
 		Category category = categoriesRepo.findById(id);
+		System.out.println(category);
 		return category;
+		
 		
 	}
 
